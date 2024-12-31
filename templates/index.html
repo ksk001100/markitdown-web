@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>markitdown-web</title>
+  <!-- <link rel="stylesheet" href="/static/css/styles.css"> -->
+</head>
+
+<body>
+  <h1>markitdown-web</h1>
+
+  <input type="file" id="file" />
+
+  <div id="result" style="white-space: pre-wrap; border: 1px solid red; margin: 15px 0; min-height: 50px;">
+    Result
+  </div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+  <script>
+    document.getElementById('file').addEventListener('change', function () {
+      var file = this.files[0];
+      var formData = new FormData();
+      formData.append('file', file);
+      fetch('/upload', {
+        method: 'POST',
+        body: formData
+      }).then(function (response) {
+        return response.text();
+      }).then(function (text) {
+        // document.getElementById('result').innerHTML = marked.parse(text);
+        document.getElementById('result').textContent = text;
+      });
+    });
+  </script>
+  <!-- <script src="/static/js/script.js"></script> -->
+</body>
+
+</html>
